@@ -12,10 +12,20 @@ var HttpClient = function () {
 };
 
 let client = new HttpClient();
-
+let idChannel = 'UCVswRUcKC-M35RzgPRv8qUg';
+let part = 'statistics, brandingSettings';
+let nameChannel = document.querySelector('#name-channel');
+let descriptionChannel = document.querySelector('#description-channel');
+let avatarChannel = document.querySelector('#avatar-channel');
+let countChannel = document.querySelector('#count');
 let showStat = () => {
-	client.get('https://www.googleapis.com/youtube/v3/channels?part=statistics&id=UC_x5XG1OV2P6uZZ5FSM9Ttw&key=AIzaSyDUQ9qfDzOq5ue3ovvIH9SS9gQFRg7YuwM', (response) => {
-		console.log(JSON.parse(response).items[0].statistics.subscriberCount);
+	client.get(`https://www.googleapis.com/youtube/v3/channels?part=${part}&id=${idChannel}&key=AIzaSyDUQ9qfDzOq5ue3ovvIH9SS9gQFRg7YuwM`, (response) => {
+    let info = JSON.parse(response).items[0];
+    console.log(info);
+    nameChannel.innerText = info.brandingSettings.channel.title;
+    descriptionChannel.innerText = info.brandingSettings.channel.description;
+    avatarChannel.src = info.brandingSettings.image.bannerImageUrl;
+    countChannel.innerText = info.statistics.subscriberCount;
 	})
 }
 
